@@ -85,10 +85,19 @@ Roda Dockle + Trivy + SBOM via container (só precisa de Docker). A assinatura c
 
 ## Como provar que os gates funcionam (para a defesa do trabalho)
 
-- **Gate Dockle**: remova a linha `USER 10001:10001` do `Dockerfile` → o Dockle acusa
-  `CIS-DI-0001` (roda como root) e a CI falha.
-- **Gate Trivy/secret**: coloque uma chave fake (`AWS_SECRET=AKIA...`) num arquivo copiado para
-  a imagem → o scanner de secrets do Trivy bloqueia.
-- **Gate Trivy/CVE**: fixe uma base antiga conhecidamente vulnerável → Trivy falha em CRITICAL.
+Cada falha abaixo foi **validada de verdade** e vive numa branch + Pull Request próprio. O PR
+mostra o CI **vermelho** parando exatamente no gate — é a evidência para a defesa. A `main`
+segue verde (pipeline real). Veja a aba *Pull requests* do repositório.
+
+| Branch / PR | O que quebra | Gate que derruba | Achado |
+|---|---|---|---|
+| `demo/falha-gate1-dockle-cis` | `ENV DB_PASSWORD=...` no `Dockerfile` | **Gate 1 — Dockle** | `CIS-DI-0010` **FATAL** (credencial em ENV) |
+| `demo/falha-gate2-trivy-secret` | arquivo `app/aws_credentials.py` com chave AWS | **Gate 2 — Trivy** | secret `AWS access key` (CRITICAL) |
+| `demo/falha-gate2-trivy-cve` | `PyYAML==5.3.1` em `requirements.txt` | **Gate 2 — Trivy** | `CVE-2020-14343` **CRITICAL** (fix: 5.4) |
+
+> Nota técnica importante (cai na defesa): no Dockle, "rodar como root" (`CIS-DI-0001`) é apenas
+> **WARN** — com `--exit-level fatal` ele **não** derruba a CI. Por isso a prova do Gate 1 usa
+> `CIS-DI-0010` (credencial em ENV), que é **FATAL**. Hardening de `USER` non-root continua no
+> Dockerfile como boa prática, mas não é o que o gate *fatal* bloqueia.
 
 Cada falha demonstra um elo da defesa 360° impedindo que um artefato inseguro chegue ao registry.
