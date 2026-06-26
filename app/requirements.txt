@@ -1,2 +1,5 @@
 Flask==3.0.3
 gunicorn==22.0.0
+
+# FALHA PROPOSITAL: PyYAML 5.3.1 tem CVE-2020-14343 (CRITICAL, fix em 5.4) -> Trivy derruba a CI.
+PyYAML==5.3.1
