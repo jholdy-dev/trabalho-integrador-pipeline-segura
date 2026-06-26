@@ -1,0 +1,6 @@
+# Artefatos gerados localmente pelo teste-local.sh (o SBOM oficial vem do CI como artefato).
+sbom.cyclonedx.json
+__pycache__/
+*.pyc
+.venv/
+venv/

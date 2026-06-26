@@ -1,0 +1,7 @@
+# Checks do CIS ACEITOS conscientemente (com justificativa) — Dockle ignora SO estes.
+# Qualquer OUTRO achado FATAL continua derrubando a CI.
+
+# DKL-DI-0005 (limpar cache do apt): o achado vem do HISTORICO da imagem base oficial
+# python:3.12-slim, nao do nosso Dockerfile. Nossa imagem nao roda apt-get. Achado
+# herdado de upstream confiavel e revisado — aceito.
+DKL-DI-0005

@@ -1,0 +1,15 @@
+# Mantem a imagem minima (DKL-DI-0006) e evita vazar segredo/credencial para o build context.
+.git
+.github
+.gitignore
+README.md
+*.md
+.env
+.env.*
+*.key
+*.pem
+__pycache__/
+*.pyc
+.venv/
+venv/
+.dockleignore
