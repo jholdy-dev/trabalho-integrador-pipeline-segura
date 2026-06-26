@@ -39,6 +39,8 @@ COPY --chown=appuser:appgroup app/ ./
 # CIS-DI-0010: nenhum segredo embutido. Segredo entra por env/secret em runtime (ver notas
 # 12-06-2026: Vault + credencial de curta duracao). O Trivy 'secret' scan valida isso na CI.
 
+# FALHA PROPOSITAL: credencial em ENV -> Dockle CIS-DI-0010 FATAL (deve derrubar a CI)
+ENV DB_PASSWORD=SuperSecret123
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PORT=8080
