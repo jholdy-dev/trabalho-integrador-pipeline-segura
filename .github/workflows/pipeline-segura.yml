@@ -44,7 +44,7 @@ jobs:
 
       # ──────────────────── 2. Trivy - CVE + SECRETS (GATE) ────────────────────
       - name: "Gate 2 - Trivy (CVE CRITICAL + secrets)"
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.LOCAL_REF }}
           scan-type: image
@@ -56,7 +56,7 @@ jobs:
 
       # ──────────────────── 3. SBOM CycloneDX (ARTEFATO DE AUDITORIA) ────────────────────
       - name: Gerar SBOM (CycloneDX)
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: ${{ env.LOCAL_REF }}
           scan-type: image
